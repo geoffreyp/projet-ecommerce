@@ -28,6 +28,29 @@ class Photo
      */
     private $path;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Product", inversedBy="photos")
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
+     */
+    private $product;
+
+    /**
+     * @return mixed
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    /**
+     * @param mixed $product
+     * @return Photo
+     */
+    public function setProduct($product)
+    {
+        $this->product = $product;
+        return $this;
+    }
 
     /**
      * Get id
