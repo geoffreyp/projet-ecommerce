@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Cart
+ * CartProduct
  *
- * @ORM\Table(name="cart")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\CartRepository")
+ * @ORM\Table(name="cart_product")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CartProductRepository")
  */
-class Cart
+class CartProduct
 {
     /**
      * @var int
@@ -22,10 +22,23 @@ class Cart
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="User", inversedBy="cart")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @var int
+     *
+     * @ORM\Column(name="quantity", type="integer")
      */
-    private $user;
+    private $quantity;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Product")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $product;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Cart")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $cart;
 
     /**
      * Get id
@@ -42,7 +55,7 @@ class Cart
      *
      * @param integer $quantity
      *
-     * @return Cart
+     * @return CartProduct
      */
     public function setQuantity($quantity)
     {

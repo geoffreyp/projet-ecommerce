@@ -3,6 +3,8 @@ Cart
     # product_id
     quantity / integer
 
+Table de relation entre Cart et Product
+
 Category
     name / string 
     description / text

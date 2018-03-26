@@ -63,6 +63,10 @@ class User
      */
     private $country;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Cart", mappedBy="user")
+     */
+    private $cart;
 
     /**
      * Get id
