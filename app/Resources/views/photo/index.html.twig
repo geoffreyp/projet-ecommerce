@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Photos list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Path</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for photo in photos %}
+            <tr>
+                <td><a href="{{ path('admin_photo_show', { 'id': photo.id }) }}">{{ photo.id }}</a></td>
+                <td>{{ photo.path }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('admin_photo_show', { 'id': photo.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('admin_photo_edit', { 'id': photo.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('admin_photo_new') }}">Create a new photo</a>
+        </li>
+    </ul>
+{% endblock %}

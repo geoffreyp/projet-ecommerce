@@ -40,6 +40,43 @@ class CartProduct
      */
     private $cart;
 
+
+    /**
+     * @return mixed
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    /**
+     * @param mixed $product
+     * @return CartProduct
+     */
+    public function setProduct($product)
+    {
+        $this->product = $product;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCart()
+    {
+        return $this->cart;
+    }
+
+    /**
+     * @param mixed $cart
+     * @return CartProduct
+     */
+    public function setCart($cart)
+    {
+        $this->cart = $cart;
+        return $this;
+    }
+
     /**
      * Get id
      *

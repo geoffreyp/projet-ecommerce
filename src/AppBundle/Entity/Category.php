@@ -46,6 +46,11 @@ class Category
         $this->products = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->name;
+    }
+
     /**
      * @return mixed
      */

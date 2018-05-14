@@ -28,3 +28,12 @@ User
 Photo
     product_id
     path / string
+    
+# Fonctionnalités
+    
+    Page d'accueil
+        liste des 5 derniers produits 
+        menu avec toutes les catégories
+    
+# Todo 
+    Sécurité 

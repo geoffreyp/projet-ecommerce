@@ -10,4 +10,17 @@ namespace AppBundle\Repository;
  */
 class ProductRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * Returns the N last active products
+     *
+     * @param null $limit
+     */
+    public function getLastActiveProducts($limit = null)
+    {
+        return $this->findBy(
+            ['status' => true],
+            ['id' => 'DESC'],
+            $limit
+        );
+    }
 }
