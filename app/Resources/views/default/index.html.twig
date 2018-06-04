@@ -2,20 +2,13 @@
 
 {% block body %}
 
-    <ul>
-        {% for cat in categories %}
-            <li><a href="{{ path('category_details', {'id': cat.id}) }}">{{ cat.name }}</a></li>
-        {% endfor %}
-    </ul>
 
-    <h2>Liste des produits</h2>
+    <h2>{{ 'product_list'|trans }}</h2>
 
     {% for product in products %}
-        {{ product.name }}
 
-        {% for photo in product.photos %}
-            <img src="{{ photo.path }}" alt="{{ photo.product.name }}" />
-        {% endfor %}
+        {% include 'default/_product_details.html.twig' %}
+        <hr />
     {% endfor %}
 
 {% endblock %}

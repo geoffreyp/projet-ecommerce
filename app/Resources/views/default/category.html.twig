@@ -1,14 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h2>Catégorie {{ category.name }}</h2>
+    <h2>{{ 'category_name'|trans({'%category%': category.name }) }}</h2>
 
     {% for product in category.products %}
-        {{ product.name }}
-
-        {% for photo in product.photos %}
-            <img src="{{ photo.path }}" alt="{{ photo.product.name }}" />
-        {% endfor %}
+        {{ include('default/_product_details.html.twig') }}
     {% endfor %}
 
 {% endblock %}

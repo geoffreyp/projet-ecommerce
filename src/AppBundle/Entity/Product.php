@@ -68,14 +68,38 @@ class Product
      */
     private $photos;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="product")
+     */
+    private $comments;
+
     public function __construct()
     {
         $this->photos = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function __toString()
     {
         return $this->name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * @param mixed $comments
+     * @return Product
+     */
+    public function setComments($comments)
+    {
+        $this->comments = $comments;
+        return $this;
     }
 
     /**

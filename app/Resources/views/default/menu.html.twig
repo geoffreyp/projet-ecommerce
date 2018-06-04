@@ -1,0 +1,7 @@
+<ul>
+    <li><a href="{{ path('homepage') }}">Homepage</a></li>
+    {% for cat in categories %}
+        <li><a href="{{ path('category_details', {'id': cat.id}) }}">{{ cat.name }}</a></li>
+    {% endfor %}
+    <li><a href="{{ path('contact') }}">Contact</a></li>
+</ul>

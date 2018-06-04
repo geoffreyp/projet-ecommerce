@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Repository;
+use AppBundle\Entity\Product;
 
 /**
  * ProductRepository
@@ -22,5 +23,18 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             ['id' => 'DESC'],
             $limit
         );
+    }
+
+    public function getRandomProducts(Product $product)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->where('p.id <> :id')
+            ->setParameter('id', $product->getId())
+            ->andWhere('p.category = :category')
+            ->setParameter('category', $product->getCategory())
+            ->andWhere('p.status = true')
+        ;
+
+        return $qb->getQuery()->getResult();
     }
 }

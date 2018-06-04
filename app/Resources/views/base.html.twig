@@ -2,11 +2,22 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Mon super site ecommerce{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
+
+        {% for message in app.flashes('info') %}
+            <div>
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        {{ render(controller(
+            'AppBundle:Default:showCategoriesMenu'
+        )) }}
+
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>
