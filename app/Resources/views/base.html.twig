@@ -10,17 +10,17 @@
     </head>
     <body>
 
-        {% for message in app.flashes('info') %}
-            <div>
-                {{ message }}
-            </div>
-        {% endfor %}
 
         {{ render(controller(
             'AppBundle:Default:showCategoriesMenu'
         )) }}
 
         <main role="main" class="container mt-5 pt-5">
+            {% for message in app.flashes('info') %}
+                <div class="alert alert-success" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
         {% block body %}{% endblock %}
         </main>
         {% block javascripts %}{% endblock %}

@@ -24,6 +24,9 @@ security:
             form_login:
                 check_path:  app_check_signin
                 login_path:  app_signin
+            logout:
+                path: logout
+                target: homepage
 
     access_control:
     # quelles permissions j'ai besoin pour accéder à une section

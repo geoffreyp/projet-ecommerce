@@ -51,8 +51,9 @@ Comment
         Prix HT / Prix TTC 
         Articles les plus vus
         Fonction twig pour la TVA 
+        Sécurité
         
         Tests unitaires
-        Sécurité
+        
         Panier
         Tests fonctionnels

@@ -31,6 +31,13 @@ class UserController extends Controller
 
     }
 
+    /**
+     * @Route("/logout", name="logout")
+     */
+    public function logoutAction()
+    {
+
+    }
 
     /**
      * @Route("/register", name="register")
@@ -56,6 +63,32 @@ class UserController extends Controller
         }
 
         return $this->render('register.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/account", name="account")
+     */
+    public function accountAction(Request $request)
+    {
+        $form = $this->createForm(UserType::class, $this->getUser());
+        $form->remove('password');
+
+        $form->handleRequest($request);
+
+        if ($form->isValid())
+        {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($this->getUser());
+            $em->flush();
+
+            $this->addFlash('info', 'Votre compte a bien été mis à jour');
+
+            return $this->redirectToRoute('account');
+        }
+
+        return $this->render('account.html.twig', [
             'form' => $form->createView(),
         ]);
     }

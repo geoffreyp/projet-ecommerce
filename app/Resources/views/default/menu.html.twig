@@ -14,6 +14,14 @@
                     <li class="nav-item"><a class="nav-link" href="{{ path('category_details', {'id': cat.id}) }}">{{ cat.name }}</a></li>
                 {% endfor %}
                 <li class="nav-item"><a class="nav-link" href="{{ path('contact') }}">Contact</a></li>
+
+                {% if app.user %}
+                    <li class="nav-item"><a class="nav-link" href="{{ path('account') }}">Mon compte</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ path('logout') }}">Logout</a></li>
+                {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{{ path('app_signin') }}">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ path('register') }}">Register</a></li>
+                {% endif %}
             </ul>
         </div>
     </nav>
