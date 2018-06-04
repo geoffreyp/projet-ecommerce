@@ -5,6 +5,6 @@
     {% endfor %}
 
     <ul>
-        <li>Prix HT : {{ product.price }} €</li>
-        <li>Prix TTC : {{ product.price * 1.2 }} €</li>
+        <li>Prix HT : {{ product.price|displayPrice }}</li>
+        <li>Prix TTC : {{ priceTTC(product.price) }} €</li>
     </ul>

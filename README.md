@@ -49,13 +49,10 @@ Comment
         Page de contact 
         
         Prix HT / Prix TTC 
-        Tests unitaires
         Articles les plus vus
         Fonction twig pour la TVA 
+        
+        Tests unitaires
         Sécurité
         Panier
         Tests fonctionnels
-        
-        Créer un nouveau champ (hits) dans la table product
-        à chaque affichage du produit, on incrémente ce compteur
-        sur chaque fiche produit, on affiche les N produits les plus visités de la catégorie
