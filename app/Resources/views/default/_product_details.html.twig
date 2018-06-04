@@ -3,3 +3,8 @@
     {% for photo in product.photos %}
         <img src="{{ photo.path }}" alt="{{ photo.product.name }}" />
     {% endfor %}
+
+    <ul>
+        <li>Prix HT : {{ product.price }} €</li>
+        <li>Prix TTC : {{ product.price * 1.2 }} €</li>
+    </ul>

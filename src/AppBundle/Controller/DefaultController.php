@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 class DefaultController extends Controller
 {
     const NUMBER_ITEMS_HOMEPAGE = 5;
+    const MAX_VIEWED_PRODUCTS = 3;
 
     /**
      * @Route("/", name="homepage")
@@ -52,7 +53,15 @@ class DefaultController extends Controller
     public function showProductAction(Request $request, Product $product)
     {
         $productRepository = $this->get('doctrine')->getRepository(Product::class);
+        $em = $this->get('doctrine')->getManager();
+
+        // Incrémentation du compteur
+        $product->addHit();
+        $em->persist($product);
+        $em->flush();
+
         $otherProducts = $productRepository->getRandomProducts($product);
+        $mostViewedProducts = $productRepository->getMostViewedProducts($product, self::MAX_VIEWED_PRODUCTS);
 
         shuffle($otherProducts);
         $otherProducts = array_slice($otherProducts, null, 2);
@@ -70,7 +79,6 @@ class DefaultController extends Controller
         if ($form->isSubmitted() && $form->isValid())
         {
             // soit le formulaire est OK => on redirige
-            $em = $this->get('doctrine')->getManager();
             $em->persist($comment);
             $em->flush();
 
@@ -80,6 +88,7 @@ class DefaultController extends Controller
         return $this->render('default/product.html.twig', [
             'product' => $product,
             'other_products' => $otherProducts,
+            'most_viewed_products' => $mostViewedProducts,
             'comment_form' => $form->createView(),
         ]);
     }

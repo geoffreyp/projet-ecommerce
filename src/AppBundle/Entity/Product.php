@@ -73,6 +73,13 @@ class Product
      */
     private $comments;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="hits", type="integer", nullable=true)
+     */
+    private $hits = 0;
+
     public function __construct()
     {
         $this->photos = new ArrayCollection();
@@ -266,6 +273,32 @@ class Product
     public function getPrice()
     {
         return $this->price;
+    }
+
+    /**
+     * @return int
+     */
+    public function getHits()
+    {
+        return $this->hits;
+    }
+
+    /**
+     * @param int $hits
+     */
+    public function setHits($hits)
+    {
+        $this->hits = $hits;
+    }
+
+    /**
+     * @return $this
+     */
+    public function addHit()
+    {
+        $this->hits++;
+
+        return $this;
     }
 }
 
