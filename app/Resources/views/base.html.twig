@@ -19,7 +19,7 @@
         <main role="main" class="container mt-5 pt-5">
             {% for message in app.flashes('info') %}
                 <div class="alert alert-success" role="alert">
-                    {{ message }}
+                    {{ message|raw }}
                 </div>
             {% endfor %}
         {% block body %}{% endblock %}

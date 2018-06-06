@@ -43,7 +43,7 @@ class CartController extends Controller
         $session->set('cart', $cart);
         $session->save();
 
-        $this->addFlash('info', 'Le produit ' . $product->getName(). ' a bien été ajouté.');
+        $this->addFlash('info', 'Le produit ' . $product->getName(). ' a bien été ajouté. <a href="'.$this->generateUrl('cart').'">Voir le panier.</a>');
 
         return $this->redirectToRoute('product_details', ['id' => $product->getId() ]);
     }
