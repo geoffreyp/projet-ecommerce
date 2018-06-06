@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Cart;
+use AppBundle\Entity\CartProduct;
 use AppBundle\Entity\Product;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -54,12 +56,22 @@ class CartController extends Controller
         $cart = $this->get('session')->get('cart');
         $productRepository = $this->get('doctrine')->getRepository(Product::class);
 
+        $products = [];
+        $totalAmount = 0;
+
         foreach ($cart as $id => $quantity) {
-            $product = $productRepository->find($id);
-            dump($product->getName(), $quantity);
+            $product = $productRepository->find($id); // + on aura de produit, + on fera de requête ...
+
+            $products[$id]['product'] = $product;
+            $products[$id]['qty'] = $quantity;
+
+            $totalAmount += $product->getPrice() * $quantity;
         }
 
-        die;
+        return $this->render('cart/details.html.twig', [
+            'products' => $products,
+            'totalAmount' => $totalAmount,
+        ]);
     }
 
 }
