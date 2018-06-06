@@ -53,7 +53,8 @@ class CartController extends Controller
      */
     public function cartAction()
     {
-        $cart = $this->get('session')->get('cart');
+        $cart = $this->get('session')->get('cart') ?? [];
+
         $productRepository = $this->get('doctrine')->getRepository(Product::class);
 
         $products = [];

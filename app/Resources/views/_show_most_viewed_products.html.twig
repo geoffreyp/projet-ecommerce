@@ -1,0 +1,9 @@
+{% if most_viewed_products is not empty %}
+
+    <h2>Les produits les plus vus</h2>
+
+    {% for product in most_viewed_products %}
+        {{ product.name }}
+    {% endfor %}
+
+{% endif %}

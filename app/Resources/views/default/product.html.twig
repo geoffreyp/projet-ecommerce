@@ -44,25 +44,15 @@
 
         <div class="col">
 
-            {% if most_viewed_products is not empty %}
+            {{ render(controller(
+                'AppBundle:Default:showMostViewedProducts',
+                { 'productId': product.id }
+            )) }}
 
-                <h2>Les produits les plus vus</h2>
-
-                {% for product in most_viewed_products %}
-                    {{ product.name }}
-                {% endfor %}
-
-            {% endif %}
-
-            {% if other_products is not empty %}
-
-                <h2>Vous aimeriez aussi ...</h2>
-
-                {% for product in other_products %}
-                    {{ product.name }}
-                {% endfor %}
-
-            {% endif %}
+            {{ render(controller(
+                'AppBundle:Default:showOtherProducts',
+                { 'productId': product.id }
+            )) }}
         </div>
 
     </div>

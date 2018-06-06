@@ -52,7 +52,6 @@ class DefaultController extends Controller
      */
     public function showProductAction(Request $request, Product $product)
     {
-        $productRepository = $this->get('doctrine')->getRepository(Product::class);
         $em = $this->get('doctrine')->getManager();
 
         // Incrémentation du compteur
@@ -60,25 +59,12 @@ class DefaultController extends Controller
         $em->persist($product);
         $em->flush();
 
-        $otherProducts = $productRepository->getRandomProducts($product);
-        $mostViewedProducts = $productRepository->getMostViewedProducts($product, self::MAX_VIEWED_PRODUCTS);
-
-        shuffle($otherProducts);
-        $otherProducts = array_slice($otherProducts, null, 2);
-
-        // créer un objet PHP Comment
         $comment = new Comment($product);
-
-        // créer notre formulaire
         $form = $this->createForm(CommentType::class, $comment);
-
-        // gérer la requête HTTP
         $form->handleRequest($request);
 
-        // soit le formulaire est KO => on affiche les erreurs
         if ($form->isSubmitted() && $form->isValid())
         {
-            // soit le formulaire est OK => on redirige
             $em->persist($comment);
             $em->flush();
 
@@ -87,8 +73,6 @@ class DefaultController extends Controller
 
         return $this->render('default/product.html.twig', [
             'product' => $product,
-            'other_products' => $otherProducts,
-            'most_viewed_products' => $mostViewedProducts,
             'comment_form' => $form->createView(),
         ]);
     }
@@ -131,6 +115,62 @@ class DefaultController extends Controller
         // Affichage
         return $this->render('default/contact.html.twig', [
             'contact_form' => $form->createView(),
+        ]);
+    }
+
+    public function showProductInCartAction($productId)
+    {
+        $cart = $this->get('session')->get('cart') ?? [];
+
+        $quantity = 0;
+
+        foreach ($cart as $id => $qty) {
+            if ($productId === $id) {
+                // Le produit est présent dans le panier
+                $quantity = $qty;
+                break;
+            }
+        }
+
+        return $this->render('_show_product_in_cart.html.twig', [
+            'quantity' => $quantity,
+        ]);
+    }
+
+    /**
+     * @param $productId
+     * @return Response
+     */
+    public function showMostViewedProductsAction($productId)
+    {
+        $productRepository = $this->get('doctrine')->getRepository(Product::class);
+
+        $product = $productRepository->find($productId);
+
+        $mostViewedProducts = $productRepository->getMostViewedProducts($product, self::MAX_VIEWED_PRODUCTS);
+
+        return $this->render('_show_most_viewed_products.html.twig', [
+            'most_viewed_products' => $mostViewedProducts,
+        ]);
+    }
+
+    /**
+     * @param $productId
+     * @return Response
+     */
+    public function showOtherProductsAction($productId)
+    {
+        $productRepository = $this->get('doctrine')->getRepository(Product::class);
+
+        $product = $productRepository->find($productId);
+
+        $otherProducts = $productRepository->getRandomProducts($product);
+
+        shuffle($otherProducts);
+        $otherProducts = array_slice($otherProducts, null, 2);
+
+        return $this->render('_show_other_products.html.twig', [
+            'other_products' => $otherProducts,
         ]);
     }
 }

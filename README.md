@@ -47,13 +47,11 @@ Comment
         Internationalisation
         Formulaires (avis)
         Page de contact 
-        
         Prix HT / Prix TTC 
         Articles les plus vus
         Fonction twig pour la TVA 
         Sécurité
+        Panier
         
         Tests unitaires
-        
-        Panier
         Tests fonctionnels
