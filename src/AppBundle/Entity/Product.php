@@ -310,5 +310,16 @@ class Product
 
         return $this;
     }
+
+    /**
+     * @param $quantity
+     * @return $this
+     */
+    public function provisionStock($quantity)
+    {
+        $this->stock += $quantity;
+
+        return $this;
+    }
 }
 

@@ -16,7 +16,7 @@
                 <small class="text-muted">{{ element.product.description }}</small>
             </div>
             <span class="text-muted">{{ priceTTC(element.product.price)|displayPrice }} (qté : {{ element.qty }})</span>
-            <i class="fas fa-trash-alt"></i>
+            <a href="{{ path('remove_from_cart', {'id' : element.product.id }) }}"><i class="fas fa-trash-alt"></i></a>
         </li>
 
         {% endfor %}

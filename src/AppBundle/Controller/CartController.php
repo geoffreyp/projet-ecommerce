@@ -74,4 +74,27 @@ class CartController extends Controller
         ]);
     }
 
+    /**
+     * @Route("/remove/{id}", requirements={"id"="\d+"} ,name="remove_from_cart")
+     */
+    public function removeFromCart(Product $product)
+    {
+        $session = $this->get('session');
+        $cart = $session->get('cart');
+
+        // remettre le stock en base
+        $product->provisionStock($cart[$product->getId()]);
+
+        $em = $this->get('doctrine')->getManager();
+        $em->persist($product);
+        $em->flush();
+
+        // supprimer le produit du panier en session
+        unset($cart[$product->getId()]);
+
+        $session->set('cart', $cart);
+        $session->save();
+
+        return $this->redirectToRoute('cart');
+    }
 }
