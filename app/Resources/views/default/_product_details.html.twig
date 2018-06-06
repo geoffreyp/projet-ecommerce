@@ -1,5 +1,7 @@
     <h3><a href="{{ path('product_details', {'id': product.id}) }}">{{ product.name }}</a></h3>
 
+    <div><a href="{{ path('add_to_cart', {'id': product.id } ) }}" class="btn btn-primary">Add to cart</a></div>
+
     {% for photo in product.photos %}
         <img src="{{ photo.path }}" alt="{{ photo.product.name }}" />
     {% endfor %}

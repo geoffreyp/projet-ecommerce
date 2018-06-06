@@ -300,5 +300,15 @@ class Product
 
         return $this;
     }
+
+    /**
+     * @return $this
+     */
+    public function decrementStock()
+    {
+        $this->stock--;
+
+        return $this;
+    }
 }
 
