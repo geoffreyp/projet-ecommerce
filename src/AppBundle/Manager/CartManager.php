@@ -18,12 +18,21 @@ class CartManager
      */
     private $session;
 
+    /**
+     * CartManager constructor.
+     * @param RegistryInterface $doctrine
+     * @param SessionInterface $session
+     */
     public function __construct(RegistryInterface $doctrine, SessionInterface $session)
     {
         $this->doctrine = $doctrine;
         $this->session = $session;
     }
 
+    /**
+     * @param array $cart
+     * @return array
+     */
     public function getProductsForDisplay(array $cart)
     {
         $productRepository = $this->doctrine->getRepository(Product::class);
@@ -46,6 +55,9 @@ class CartManager
         ];
     }
 
+    /**
+     * @param Product $product
+     */
     public function removeProduct(Product $product)
     {
         $cart = $this->session->get('cart');
@@ -61,5 +73,26 @@ class CartManager
         unset($cart[$product->getId()]);
         $this->session->set('cart', $cart);
         $this->session->save();
+    }
+
+    /**
+     * @param $productId
+     * @return int|mixed
+     */
+    public function quantityOfProductInCart($productId)
+    {
+        $cart = $this->session->get('cart') ?? [];
+
+        $quantity = 0;
+
+        foreach ($cart as $id => $qty) {
+            if ($productId === $id) {
+                // Le produit est présent dans le panier
+                $quantity = $qty;
+                break;
+            }
+        }
+
+        return $quantity;
     }
 }

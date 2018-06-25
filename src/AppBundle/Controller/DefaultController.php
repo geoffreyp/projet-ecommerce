@@ -30,7 +30,6 @@ class DefaultController extends Controller
         $productRepository = $this->get('doctrine')->getRepository(Product::class);
 
         $products = $productRepository->getLastActiveProducts(self::NUMBER_ITEMS_HOMEPAGE);
-        //$products = $repository->getLastActiveProducts($this->getParameter('products_homepage'));
 
         return $this->render('default/index.html.twig', [
             'products' => $products,
@@ -120,17 +119,7 @@ class DefaultController extends Controller
 
     public function showProductInCartAction($productId)
     {
-        $cart = $this->get('session')->get('cart') ?? [];
-
-        $quantity = 0;
-
-        foreach ($cart as $id => $qty) {
-            if ($productId === $id) {
-                // Le produit est présent dans le panier
-                $quantity = $qty;
-                break;
-            }
-        }
+        $quantity = $this->get('app.cart')->quantityOfProductInCart($productId);
 
         return $this->render('_show_product_in_cart.html.twig', [
             'quantity' => $quantity,
