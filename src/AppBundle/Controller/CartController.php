@@ -5,19 +5,25 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Cart;
 use AppBundle\Entity\CartProduct;
 use AppBundle\Entity\Product;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 class CartController extends Controller
 {
     /**
-     * @Route("/add/{id}", requirements={"id"="\d+"} ,name="add_to_cart")
+     * @Route("/add", name="add_to_cart")
+     * @Method("POST")
      *
      * @param Product $product
      * @throws \Exception
      */
-    public function addToCart(Product $product)
+    public function addToCart(Request $request)
     {
+        $productRepository = $this->get('doctrine')->getRepository(Product::class);
+        $product = $productRepository->find($request->get('product_id'));
+
         // gestion du stock
         $currentStock = $product->getStock();
 
