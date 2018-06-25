@@ -61,23 +61,11 @@ class CartController extends Controller
     {
         $cart = $this->get('session')->get('cart') ?? [];
 
-        $productRepository = $this->get('doctrine')->getRepository(Product::class);
-
-        $products = [];
-        $totalAmount = 0;
-
-        foreach ($cart as $id => $quantity) {
-            $product = $productRepository->find($id); // + on aura de produit, + on fera de requête ...
-
-            $products[$id]['product'] = $product;
-            $products[$id]['qty'] = $quantity;
-
-            $totalAmount += $product->getPrice() * $quantity;
-        }
+        $display = $this->get('app.cart')->getProductsForDisplay($cart);
 
         return $this->render('cart/details.html.twig', [
-            'products' => $products,
-            'totalAmount' => $totalAmount,
+            'products' => $display['products'],
+            'totalAmount' => $display['totalAmount'],
         ]);
     }
 
@@ -89,7 +77,7 @@ class CartController extends Controller
     {
         $productRepository = $this->get('doctrine')->getRepository(Product::class);
         $product = $productRepository->find($request->get('product_id'));
-        
+
         $session = $this->get('session');
         $cart = $session->get('cart');
 

@@ -54,8 +54,7 @@ class UserController extends Controller
             // On enregistre l'utilisateur en base
             $em = $this->getDoctrine()->getManager();
 
-            $encodedPassword = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
-            $user->setPassword($encodedPassword);
+            $this->get('app.manager.user')->manageCredentials($user);
 
             $em->persist($user);
             $em->flush();
@@ -109,8 +108,7 @@ class UserController extends Controller
         {
             $em = $this->getDoctrine()->getManager();
 
-            $encodedPassword = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
-            $user->setPassword($encodedPassword);
+            $this->get('app.manager.user')->manageCredentials($user);
 
             $em->persist($this->getUser());
             $em->flush();
