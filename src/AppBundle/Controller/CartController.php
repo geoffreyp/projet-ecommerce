@@ -78,21 +78,7 @@ class CartController extends Controller
         $productRepository = $this->get('doctrine')->getRepository(Product::class);
         $product = $productRepository->find($request->get('product_id'));
 
-        $session = $this->get('session');
-        $cart = $session->get('cart');
-
-        // remettre le stock en base
-        $product->provisionStock($cart[$product->getId()]);
-
-        $em = $this->get('doctrine')->getManager();
-        $em->persist($product);
-        $em->flush();
-
-        // supprimer le produit du panier en session
-        unset($cart[$product->getId()]);
-
-        $session->set('cart', $cart);
-        $session->save();
+        $this->get('app.cart')->removeProduct($product);
 
         return $this->redirectToRoute('cart');
     }

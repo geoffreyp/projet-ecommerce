@@ -4,6 +4,7 @@ namespace AppBundle\Manager;
 
 use AppBundle\Entity\Product;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class CartManager
 {
@@ -12,9 +13,15 @@ class CartManager
      */
     private $doctrine;
 
-    public function __construct(RegistryInterface $doctrine)
+    /**
+     * @var SessionInterface
+     */
+    private $session;
+
+    public function __construct(RegistryInterface $doctrine, SessionInterface $session)
     {
         $this->doctrine = $doctrine;
+        $this->session = $session;
     }
 
     public function getProductsForDisplay(array $cart)
@@ -37,5 +44,22 @@ class CartManager
             'products' => $products,
             'totalAmount' => $totalAmount,
         ];
+    }
+
+    public function removeProduct(Product $product)
+    {
+        $cart = $this->session->get('cart');
+
+        // remettre le stock en base
+        $product->provisionStock($cart[$product->getId()]);
+
+        $em = $this->doctrine->getManager();
+        $em->persist($product);
+        $em->flush();
+
+        // supprimer le produit du panier en session
+        unset($cart[$product->getId()]);
+        $this->session->set('cart', $cart);
+        $this->session->save();
     }
 }

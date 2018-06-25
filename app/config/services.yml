@@ -40,4 +40,4 @@ services:
 
     app.cart:
         class: AppBundle\Manager\CartManager
-        arguments: ['@doctrine']
+        arguments: ['@doctrine', '@session']
