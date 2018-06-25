@@ -18,7 +18,10 @@
                     <small class="text-muted">{{ element.product.description }}</small>
                 </div>
                 <span class="text-muted">{{ priceTTC(element.product.price)|displayPrice }} (qté : {{ element.qty }})</span>
-                <a href="{{ path('remove_from_cart', {'id' : element.product.id }) }}"><i class="fas fa-trash-alt"></i></a>
+                <form method="post" action="{{ path('remove_from_cart') }}">
+                    <input type="hidden" name="product_id" value="{{ element.product.id }}" />
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-trash-alt"></i></button>
+                </form>
             </li>
 
             {% endfor %}

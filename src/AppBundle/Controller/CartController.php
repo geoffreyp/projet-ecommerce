@@ -82,10 +82,14 @@ class CartController extends Controller
     }
 
     /**
-     * @Route("/remove/{id}", requirements={"id"="\d+"} ,name="remove_from_cart")
+     * @Route("/remove", name="remove_from_cart")
+     * @Method("POST")
      */
-    public function removeFromCart(Product $product)
+    public function removeFromCart(Request $request)
     {
+        $productRepository = $this->get('doctrine')->getRepository(Product::class);
+        $product = $productRepository->find($request->get('product_id'));
+        
         $session = $this->get('session');
         $cart = $session->get('cart');
 
