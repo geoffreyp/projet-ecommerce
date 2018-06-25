@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
+use AppBundle\Form\EditPasswordType;
 use AppBundle\Form\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -89,6 +90,37 @@ class UserController extends Controller
         }
 
         return $this->render('account.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/change-password", name="change_password")
+     */
+    public function changePasswordAction(Request $request)
+    {
+        $user = $this->getUser();
+
+        $form = $this->createForm(EditPasswordType::class, $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid())
+        {
+            $em = $this->getDoctrine()->getManager();
+
+            $encodedPassword = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
+            $user->setPassword($encodedPassword);
+
+            $em->persist($this->getUser());
+            $em->flush();
+
+            $this->addFlash('info', 'Votre mot de passe a bien été mis à jour');
+
+            return $this->redirectToRoute('account');
+        }
+
+        return $this->render('edit_password.html.twig', [
             'form' => $form->createView(),
         ]);
     }

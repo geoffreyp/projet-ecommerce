@@ -8,29 +8,23 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserType extends AbstractType
+class EditPasswordType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('username')
-            ->add('password', RepeatedType::class, [
+        $builder->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'required' => true,
                 'first_options' => ['label' => 'Mot de passe'],
                 'second_options' => ['label' => 'Vérification du mot de passe'],
             ])
-            ->add('email')
-            ->add('address')
-            ->add('zip')
-            ->add('city')
-            ->add('country')
         ;
     }/**
-     * {@inheritdoc}
-     */
+ * {@inheritdoc}
+ */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
@@ -43,6 +37,6 @@ class UserType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_user';
+        return 'appbundle_password';
     }
 }
