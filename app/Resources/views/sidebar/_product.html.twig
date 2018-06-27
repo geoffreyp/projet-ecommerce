@@ -1,0 +1,28 @@
+<div style="border: 1px solid black;padding: 10px;border-radius: 20px; margin-bottom: 5px">
+    <h4><a href="{{ path('product_details', {'id': product.id}) }}">{{ product.name }}</a></h4>
+
+
+        {% if product.stock > 0 %}
+            <form action="{{ path('add_to_cart') }}" method="post">
+                <input type="hidden" name="product_id" value="{{ product.id }}" />
+                <div class="input-group mb-3" style="width: 50%;">
+                    <input style="text-align: center" class="form-control" type="number" name="qty" value="1" min="1" max="{{ product.stock }}"/>
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-primary" type="submit">Add to cart</button>
+                    </div>
+                </div>
+            </form>
+        {% else %}
+            <div class="alert alert-danger" role="alert">
+                Le produit n'est pas disponible !
+            </div>
+        {% endif %}
+
+
+
+
+    <ul>
+        <li>Prix HT : {{ product.price|displayPrice }}</li>
+        <li>Prix TTC : {{ priceTTC(product.price) }} €</li>
+    </ul>
+</div>

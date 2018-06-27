@@ -3,7 +3,7 @@
     <h2>Les produits les plus vus</h2>
 
     {% for product in most_viewed_products %}
-        {{ product.name }}
+        {{ include('sidebar/_product.html.twig') }}
     {% endfor %}
 
 {% endif %}
