@@ -1,10 +1,16 @@
     <h3><a href="{{ path('product_details', {'id': product.id}) }}">{{ product.name }}</a></h3>
 
     <div>
+        {% if product.stock > 0 %}
         <form action="{{ path('add_to_cart') }}" method="post">
             <input type="hidden" name="product_id" value="{{ product.id }}" />
             <button type="submit" class="btn btn-primary">Add to cart</button>
         </form>
+        {% else %}
+        <div class="alert alert-danger" role="alert">
+            Le produit n'est pas disponible !
+        </div>
+        {% endif %}
 
         {{ render(controller(
             'AppBundle:Default:showProductInCart',
