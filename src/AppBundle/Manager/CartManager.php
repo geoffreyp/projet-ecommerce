@@ -75,6 +75,8 @@ class CartManager
         $this->session->save();
     }
 
+
+
     /**
      * @param Product $product
      * @throws \Exception

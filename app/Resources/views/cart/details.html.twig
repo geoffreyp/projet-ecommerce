@@ -29,10 +29,19 @@
             <li class="list-group-item d-flex justify-content-between">
                 <span>Total</span>
                 <strong>{{ priceTTC(totalAmount)|displayPrice }}</strong>
-                Vider le panier
+                <form method="post" action="{{ path('clean_cart') }}">
+                    {% for element in products %}
+                    <input type="hidden" name="product_id[]" value="{{ element.product.id }}" />
+                    {% endfor %}
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-trash-alt"></i> Vider le panier</button>
+                </form>
             </li>
         </ul>
 
+    {% else %}
+        <div class="alert alert-success" role="alert">
+            Le panier est vide
+        </div>
     {% endif %}
 
 {% endblock %}

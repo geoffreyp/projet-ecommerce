@@ -60,4 +60,20 @@ class CartController extends Controller
 
         return $this->redirectToRoute('cart');
     }
+
+    /**
+     * @Route("/clean", name="clean_cart")
+     * @Method("POST")
+     */
+    public function clean(Request $request){
+        $productRepository = $this->get('doctrine')->getRepository(Product::class);
+        $product_ids = $request->get('product_id');
+
+        foreach ($product_ids as $id){
+            $product = $productRepository->find($id);
+
+            $this->get('app.cart')->removeProduct($product);
+        }
+        return $this->redirectToRoute('cart');
+    }
 }
