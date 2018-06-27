@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CartController extends Controller
 {
+    const MAX_VIEWED_PRODUCTS = 3;
+
     /**
      * @Route("/add", name="add_to_cart")
      * @Method("POST")
@@ -44,9 +46,14 @@ class CartController extends Controller
 
         $display = $this->get('app.cart')->getProductsForDisplay($cart);
 
+        $productRepository = $this->get('doctrine')->getRepository(Product::class);
+        $mostViewedProducts = $productRepository->getAllMostViewedProducts(self::MAX_VIEWED_PRODUCTS);
+
         return $this->render('cart/details.html.twig', [
             'products' => $display['products'],
             'totalAmount' => $display['totalAmount'],
+            'most_viewed_products' => $mostViewedProducts,
+
         ]);
     }
 

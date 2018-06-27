@@ -50,4 +50,15 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function getAllMostViewedProducts($limit)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->orderBy('p.hits', 'desc')
+            ->setMaxResults($limit)
+            ->andWhere('p.status = true')
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
 }
