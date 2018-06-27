@@ -76,6 +76,35 @@ class CartManager
     }
 
     /**
+     * @param Product $product
+     * @throws \Exception
+     */
+    public function addProduct(Product $product){
+        // gestion du stock
+        $currentStock = $product->getStock();
+
+        if ($currentStock === 0) {
+            throw new \Exception('Produit indisponible');
+        }
+
+        $product->decrementStock();
+
+        $em = $this->doctrine->getManager();
+        $em->persist($product);
+        $em->flush();
+
+        $cart = $this->session->get('cart');
+
+        $currentQty = $cart[$product->getId()] ?? 0;
+
+        // on ajoute le produit au panier
+        $cart[$product->getId()] = $currentQty + 1;
+
+        $this->session->set('cart', $cart);
+        $this->session->save();
+    }
+
+    /**
      * @param $productId
      * @return int|mixed
      */
