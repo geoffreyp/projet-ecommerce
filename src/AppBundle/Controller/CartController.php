@@ -24,10 +24,13 @@ class CartController extends Controller
     {
         $productRepository = $this->get('doctrine')->getRepository(Product::class);
         $product = $productRepository->find($request->get('product_id'));
+        $qty = $request->get("qty");
 
-        $this->get('app.cart')->addProduct($product);
+        for($i = 0; $i < $qty; $i++) {
+            $this->get('app.cart')->addProduct($product);
+        }
 
-        $this->addFlash('info', 'Le produit ' . $product->getName(). ' a bien été ajouté. <a href="'.$this->generateUrl('cart').'">Voir le panier.</a>');
+        $this->addFlash('info', 'Le produit ' . $product->getName(). ' a bien été ajouté '. $qty .' fois <a href="'.$this->generateUrl('cart').'">Voir le panier.</a>');
 
         return $this->redirectToRoute('product_details', ['id' => $product->getId() ]);
     }

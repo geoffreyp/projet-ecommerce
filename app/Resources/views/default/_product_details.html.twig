@@ -4,7 +4,12 @@
         {% if product.stock > 0 %}
         <form action="{{ path('add_to_cart') }}" method="post">
             <input type="hidden" name="product_id" value="{{ product.id }}" />
-            <button type="submit" class="btn btn-primary">Add to cart</button>
+            <div class="input-group mb-3" style="width: 25%;">
+                <input style="text-align: center" class="form-control" type="number" name="qty" value="1" min="1" max="{{ product.stock }}"/>
+                <div class="input-group-append">
+                    <button class="btn btn-outline-primary" type="submit">Add to cart</button>
+                </div>
+            </div>
         </form>
         {% else %}
         <div class="alert alert-danger" role="alert">
